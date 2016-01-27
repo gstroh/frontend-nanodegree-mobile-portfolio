@@ -1,8 +1,167 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/bootstrap-grid.css">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta charset="utf-8">
+  <!-- Inline both CSS files after removing unused CSS with grunt-uncss.  Then, minify. -->
+  <!--<link rel="stylesheet" href="css/style.css">-->
+  <!--<link rel="stylesheet" href="css/bootstrap-grid.css">-->
+  <style id="style" type="text/css">
+
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      background: black;
+    }
+
+    input {
+      background: grey;
+      font-size: 18px;
+    }
+
+    form {
+      display: inline-block;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    #pizzaSize {
+      font-weight: 800;
+    }
+
+    .mover {
+      position: fixed;
+      width: 256px;
+      z-index: -1;
+    }
+
+    .randomPizzaContainer {
+      float: left;
+      display: flex;
+    }
+
+    .randomPizzaContainer:after {
+      content: "";
+      display: table;
+      clear:both;
+    }
+
+     .container {
+      background-color: rgba(240, 60, 60, 0.8);
+    }
+
+  </style>
+
+  <style id="bootstrap-grid.css" type="text/css">
+
+    /*** uncss> filename: src/views/css/bootstrap-grid.css ***/
+
+    img {
+      vertical-align: middle;
+    }
+
+    .img-responsive {
+      display: block;
+      width: 100% \9;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      margin-right: auto;
+      margin-left: auto;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        width: 750px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .container {
+        width: 970px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        width: 1170px;
+      }
+    }
+
+    .row {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+
+    .col-md-4,
+    .col-md-6,
+    .col-md-8,
+    .col-md-12 {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    @media (min-width: 992px) {
+      .col-md-4,
+      .col-md-6,
+      .col-md-8,
+      .col-md-12 {
+        float: left;
+      }
+
+      .col-md-12 {
+        width: 100%;
+      }
+
+      .col-md-8 {
+        width: 66.66666667%;
+      }
+
+      .col-md-6 {
+        width: 50%;
+      }
+
+      .col-md-4 {
+        width: 33.33333333%;
+      }
+
+      .col-md-push-3 {
+        left: 25%;
+      }
+
+      .col-md-push-2 {
+        left: 16.66666667%;
+      }
+    }
+
+    .container:before,
+    .container:after,
+    .row:before,
+    .row:after {
+      content: " ";
+      display: table;
+    }
+
+    .container:after,
+    .row:after {
+      clear: both;
+    }
+
+  </style>
+
 </head>
 
 <body>
@@ -36,7 +195,15 @@
     </div>
     <div id="callToAction" class="row">
       <div class="col-md-4">
-        <img src="images/pizzeria.jpg" class="img-responsive"> <!-- Image credit to: http://commons.wikimedia.org/wiki/File:HK_TST_night_%E5%98%89%E8%98%AD%E9%81%93_Granville_Road_restaurant_Paisano's_Pizzeria_pizza_Dec-2013.JPG -->
+        <!--<img src="images/pizzeria.jpg" class="img-responsive">-->
+        <!-- Allow browser to choose correct picture size and quality -->
+        <picture>
+          <source media="(min-width: 750px)" srcset="images/pizzeria-1600_large_2x.jpg 2x, images/pizzeria-800_large_1x.jpg" />
+          <source media="(min-width: 500px)" srcset="images/pizzeria-1000_med_2x.jpg 2x, images/pizzeria-500_med_1x.jpg" />
+          <source media="(min-width: 200px)" srcset="images/pizzeria-400_small_2x.jpg 2x, images/pizzeria-200_small_1x.jpg" />
+          <img src="images/pizzeria-400_small_2x.jpg" alt="Cam's Pizzeria" class="img-responsive">
+        </picture>
+
       </div>
       <div class="col-md-8">
         <div class="row">
