@@ -502,7 +502,9 @@ function updatePositions() {
     var phase = Math.sin((sT / 1250) + (i % 5));
     var pix = (items[i].basicLeft + 100 * phase) + 'px';
     var translate_cmmd = 'translateX(' + pix + ')';
+    //var translate_cmmd = 'translate(' + pix + ',0)';
     // Replace style.left with translateX.
+    // Had to make the mover class as wide as the window in CSS to get this to work.
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
     items[i].style.transform = translate_cmmd;
   }
