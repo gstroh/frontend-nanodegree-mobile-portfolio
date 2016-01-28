@@ -421,9 +421,9 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
-  // Iterates through pizza elements on the page and changes their widths
+  // Iterates through pizza elements on the page and changes their widths.
+  // Complete rewrite of this function to eliminate forced synchronous layout issues.
   function changePizzaSizes(size) {
-
     switch(size) {
         case "1":
           newWidth =  25;
@@ -437,7 +437,7 @@ var resizePizzas = function(size) {
         default:
           console.log("bug in sizeSwitcher");
       }
-
+    // Changed querySelectorAll to getElementByClassName for better performance.
     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
     //var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
     for (var i = 0; i < randomPizzas.length; i++) {
@@ -490,23 +490,22 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
   // scrollTop causes Layout, with style on the next line.  Not good!!
-  var items = document.getElementsByClassName('mover');
+  // Changed querySelectorAll to getElementByClassName for better performance.
   //var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover');
   // Moved scrollTop out of the loop.
   var sT = document.body.scrollTop;
 
   for (var i = 0; i < items.length; i++) {
-    //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
     // modula operator % gives remainder (0,1,2,3,4)
     // var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
     var phase = Math.sin((sT / 1250) + (i % 5));
-    // console.log(phase, sT, document.body.scrollTop, i % 5);
-    // replace style.left with??
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    var pix = (items[i].basicLeft + 100 * phase) + 'px';
+    var translate_cmmd = 'translateX(' + pix + ')';
+    // Replace style.left with translateX.
+    //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.transform = translate_cmmd;
   }
-  // Could layer the screen and only paint what changes versus the entire screen.
-  // Could use layers & will-change: transform.
-
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -517,8 +516,14 @@ function updatePositions() {
   }
 }
 
+// Added this function to be able to use requestAnimationFrame from addEventListener below.
+function renderPositions() {
+  requestAnimationFrame(updatePositions);
+}
+
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+//window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', renderPositions);
 
 // Generates the sliding pizzas when the page loads.
 // Do I really need to animate 200 pizzas when I only see a few on the page??
@@ -536,5 +541,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-  updatePositions();
+  //updatePositions();
+  renderPositions();
 });

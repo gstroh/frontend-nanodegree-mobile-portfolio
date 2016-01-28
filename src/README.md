@@ -1,73 +1,62 @@
-## Website Performance Optimization portfolio project
+## Website Performance Optimization Portfolio Project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+The purpose of this project is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques I've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
-To get started, check out the repository, inspect the code,
+To get started, check out the repository to inspect the code and check out the deployed application on gh-pages:
 
-### Getting started
+* [Github code repository](https://github.com/gstroh/frontend-nanodegree-mobile-portfolio)
+* [Deployed application on gh-pages](http://gstroh.github.io/frontend-nanodegree-mobile-portfolio/)
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+### Application Changes
 
-Some useful tips to help you get started:
+####Part 1: Optimize PageSpeed Insights score (96 Desktop, 95 Mobile) for index.html
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+Here's a list of the performance improvements I made in index.html:
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
-
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
-
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ngrok http 8080
-  ```
-
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
-
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+1. Used async in JS where applicable to prevent blocking in all html.
+1. Added media="print" on print.css declaration to prevent CRP blocking.
+1. Resize and optimize the huge pizzeria.jpg file.
+1. Used a media query for pizzeria.jpg and scrset to allow browser to choose image size based on viewport width and display quality (1x/2x).
+1. Optimize all images.
+1. Inline style.css in index.html.
+1. Inline font through JS code after footer in index.html.
+1. Did not inline perfmatter.js due to use of async.
+1. Combine pizza.html stylesheets style.css and bootstrap-grid.css.  Used grunt-uncss to remove unused css in both files.  Inlined combined CSS file.
+1. Changed project-2048.html to reference local copy of img/2048.png.  Also, optimized it.
+1. Minified all css with grunt-contrib-cssmin.
+1. Minified all html with grunt-contrib-htmlmin.
+1. Minified all js with grunt-uglify.
+1. Compressed all images with grunt-contrib-imagemin.
+1. Created smaller images of pizzeria.jpg with grunt-resonsive-images.
 
 ####Part 2: Optimize Frames per Second in pizza.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+Following is a list of changes I made to ensure the frame rate while scrolling in pizza.html is 60fps or better:
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+1. Complete rewrite of function changePizzaSizes in main.js.  Eliminate unnecessary code and code causing render blocking.
+1. Changed function updatePositions in main.js to move scrollTop out of the loop.  It caused Layout.
+1. Replaced querySelectorAll with getElementsByClassName.  More performant.
+1. Used requestAnimationFrame for animation of pizzas on screen.  Put call to requestAnimationFrame inside new function renderPositions.
+1. Replaced use of CSS basicLeft property with transform translateX property in function updatePositions in main.js.
+1. Add will-change: transform to mover class in style.css inlined in pizza.html.
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
+### Project file structure
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
+Per instructions for this project, the following directories were used for source and production code and files: src and dist, respectively.  I also have a dev directory which I used for intermediary files from grunt-uncss.  The gh-pages application uses the dist directory for running the application.
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+### Grunt packages needed to run grunt for this application.
 
-### Sample Portfolios
+The following grunt plugins were used to automatically perform optimizations, minification, pushing changes to Github, remove unused CSS, copy files and create images of multiple sizes and quality.
 
-Feeling uninspired by the portfolio? Here's a list of cool portfolios I found after a few minutes of Googling.
+* grunt
+* grunt-responsive-images
+* grunt-contrib-cssmin
+* grunt-contrib-htmlmin
+* grunt-contrib-imagemin
+* grunt-contrib-uglify
+* grunt-uncss
+* grunt-gh-pages
+* grunt-contrib-copy
+* grunt-contrib-clean
 
-* <a href="http://www.reddit.com/r/webdev/comments/280qkr/would_anybody_like_to_post_their_portfolio_site/">A great discussion about portfolios on reddit</a>
-* <a href="http://ianlunn.co.uk/">http://ianlunn.co.uk/</a>
-* <a href="http://www.adhamdannaway.com/portfolio">http://www.adhamdannaway.com/portfolio</a>
-* <a href="http://www.timboelaars.nl/">http://www.timboelaars.nl/</a>
-* <a href="http://futoryan.prosite.com/">http://futoryan.prosite.com/</a>
-* <a href="http://playonpixels.prosite.com/21591/projects">http://playonpixels.prosite.com/21591/projects</a>
-* <a href="http://colintrenter.prosite.com/">http://colintrenter.prosite.com/</a>
-* <a href="http://calebmorris.prosite.com/">http://calebmorris.prosite.com/</a>
-* <a href="http://www.cullywright.com/">http://www.cullywright.com/</a>
-* <a href="http://yourjustlucky.com/">http://yourjustlucky.com/</a>
-* <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
-* <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
-* <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+Gruntfile.js and package.json are included in the project's base directory.

@@ -110,20 +110,16 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          // includes files within path
           {src: ['src/README.md'], dest: 'dist/README.md', filter: 'isFile'}
         ],
       },
     },
 
+// Pizza.html now has CSS inlined from results of running this on original pizza.html
      uncss: {
       dist: {
         files: [
-          {dest: 'dev/css/style2048.css', src: 'src/project-2048.html'},
-          {dest: 'dev/views/css/styleALL.css', src: 'src/views/pizza.html'},
-          {dest: 'dev/css/styleIndex.css', src: 'src/index.html'},
-          {dest: 'dev/css/styleMobile.css', src: 'src/project-mobile.html'},
-          {dest: 'dev/css/styleWebperf.css', src: 'src/project-webperf.html'}
+          //{dest: 'dev/views/css/styleALL.css', src: 'src/views/pizza.html'}
         ]
       }
     }
@@ -138,6 +134,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-uncss');
   grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.registerTask('default', ['responsive_images','imagemin','cssmin','htmlmin','uglify','uncss','gh-pages','copy']);
+  grunt.registerTask('default', ['responsive_images','imagemin','cssmin','htmlmin','uglify','copy']);
 
 };
