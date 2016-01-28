@@ -57,6 +57,21 @@ The following grunt plugins were used to automatically perform optimizations, mi
 * grunt-uncss
 * grunt-gh-pages
 * grunt-contrib-copy
-* grunt-contrib-clean
 
 Gruntfile.js and package.json are included in the project's base directory.
+
+### Procedure used to deploy application.
+
+The following commands were used in the terminal application (Mac) in the application base directory:
+
+1. grunt
+1. git commit -a
+1. git push origin master
+1. grunt gh-pages
+
+Explanation of commands:
+
+1. Use grunt to automate resizing of images, optimization of images, copying files and minification of html, css and js.
+1. Commit the current changes to git.
+1. Push the changes to Github.
+1. Use grunt-gh-pages to deploy the application to gh-pages.
